@@ -31,146 +31,126 @@ body {
     padding: 20px;
 }
 
-.sidebar h2 {
-    color: var(--accent);
-    margin: 0;
-}
+.sidebar h2 { color: var(--accent); margin: 0; }
 
-/* AUTOR */
-.author {
-    margin-top: 5px;
-    font-size: 13px;
-    font-weight: bold;
-    color: #ffffff;
-    opacity: 0.9;
-}
+.author { font-size:13px; font-weight:bold; color:white; margin-top:5px; }
 
-/* MENU */
-.menu {
-    margin-top: 30px;
-}
+.menu { margin-top:30px; }
 
 .menu-item {
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #c9d1d9;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
 }
 
-.menu-item:hover {
-    background: var(--accent);
-}
-
-.menu-item.active {
-    background: var(--accent);
-}
+.menu-item:hover { background:var(--accent); }
 
 /* MAIN */
-.main {
-    flex: 1;
-    padding: 20px;
-}
+.main { flex:1; padding:20px; }
 
-/* TITLE */
-.title {
-    margin: 0 0 15px 0;
-    font-size: 24px;
-}
+.title { margin-bottom:15px; }
 
-/* HEADER */
-.topbar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
+.topbar { display:flex; gap:10px; margin-bottom:20px; }
 
 input, select {
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: var(--card);
-    color: white;
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    background:var(--card);
+    color:white;
 }
 
 /* GRID */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
-    gap: 15px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
 }
 
 /* CARD */
 .card {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 15px;
-    cursor: pointer;
-    transition: 0.2s;
+    position:relative;
+    background:var(--card);
+    border-radius:16px;
+    padding:15px;
+    cursor:pointer;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    background: #1f2937;
-}
-
-.card img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-}
+.card img { width:40px; margin-bottom:10px; }
 
 .tag {
-    background: var(--accent);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    display: inline-block;
-    margin-top: 5px;
+    background:var(--accent);
+    padding:3px 6px;
+    border-radius:5px;
+    font-size:12px;
 }
 
-/* ADD BUTTON */
+/* MENU 3 PUNTOS */
+.more {
+    position:absolute;
+    top:10px;
+    right:10px;
+    cursor:pointer;
+}
+
+.dropdown {
+    position:absolute;
+    top:30px;
+    right:10px;
+    background:#1f2937;
+    border-radius:8px;
+    display:none;
+    flex-direction:column;
+}
+
+.dropdown div {
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.dropdown div:hover {
+    background:var(--accent);
+}
+
+/* BOTON */
 .add-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--accent);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 30px;
-    border: none;
-    color: white;
-    cursor: pointer;
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:var(--accent);
+    color:white;
+    font-size:30px;
+    border:none;
 }
 
 /* MODAL */
 .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    justify-content:center;
+    align-items:center;
 }
 
 .modal-content {
-    background: var(--card);
-    padding: 20px;
-    border-radius: 12px;
-    width: 300px;
+    background:var(--card);
+    padding:20px;
+    border-radius:12px;
+    width:300px;
 }
 
 .modal-content input {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
+    width:100%;
+    margin-bottom:10px;
+    padding:10px;
 }
 
-/* MOBILE */
-@media(max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
+@media(max-width:768px){
+    .sidebar{display:none;}
 }
 </style>
 </head>
@@ -182,145 +162,148 @@ input, select {
     <div class="author">by: Luis Carranza</div>
 
     <div class="menu">
-        <div class="menu-item active" onclick="cargar()">🏠 Inicio</div>
+        <div class="menu-item" onclick="cargar()">🏠 Inicio</div>
     </div>
 </div>
 
 <div class="main">
-
-<h1 class="title">Mis enlaces</h1>
+<h2 class="title">Mis enlaces</h2>
 
 <div class="topbar">
-    <input type="text" id="search" placeholder="Buscar...">
-    <select id="filter">
-        <option value="">Todas</option>
-    </select>
+<input id="search" placeholder="Buscar...">
+<select id="filter"><option value="">Todas</option></select>
 </div>
 
 <div class="grid" id="links"></div>
-
 </div>
 
 <button class="add-btn" onclick="openModal()">+</button>
 
 <div class="modal" id="modal">
 <div class="modal-content">
-    <input id="titulo" placeholder="Título">
-    <input id="url" placeholder="URL">
-    <input id="categoria" placeholder="Categoría">
-    <button onclick="guardar()">Guardar</button>
+<input id="titulo" placeholder="Título">
+<input id="url" placeholder="URL">
+<input id="categoria" placeholder="Categoría">
+<button onclick="guardar()">Guardar</button>
 </div>
 </div>
 
 <script>
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded",()=>{
 
 const supabaseClient = supabase.createClient(
-  "https://fburktlykhajzzvpnfcg.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZidXJrdGx5a2hhanp6dnBuZmNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDg3NDEsImV4cCI6MjA5MjYyNDc0MX0.J1O0IjfC233ezx9jb55xnINm4i9qtX6obnFvCvoyDk4"
+"https://fburktlykhajzzvpnfcg.supabase.co",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 );
 
-let data = [];
+let data=[];
+let editId=null;
 
-function getFavicon(url) {
-    return "https://www.google.com/s2/favicons?sz=64&domain=" + url;
+function getFavicon(url){
+return "https://www.google.com/s2/favicons?sz=64&domain="+url;
 }
 
-async function cargar() {
-    const { data: links, error } = await supabaseClient.from('links').select('*');
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    data = links || [];
-    render();
-    categorias();
+async function cargar(){
+const {data:links}=await supabaseClient.from('links').select('*');
+data=links||[];
+render();
+categorias();
 }
 
-function render() {
-    const cont = document.getElementById("links");
-    cont.innerHTML = "";
+function render(){
+const cont=document.getElementById("links");
+cont.innerHTML="";
 
-    const search = document.getElementById("search").value.toLowerCase();
-    const filter = document.getElementById("filter").value;
+data.forEach(i=>{
+let url=i.url.startsWith("http")?i.url:"https://"+i.url;
 
-    data
-    .filter(i => 
-        i.titulo.toLowerCase().includes(search) &&
-        (!filter || i.categoria === filter)
-    )
-    .forEach(i => {
+const div=document.createElement("div");
+div.className="card";
 
-        let url = i.url.startsWith("http") ? i.url : "https://" + i.url;
+div.innerHTML=`
+<div class="more">⋮</div>
+<div class="dropdown">
+<div onclick="editar(${i.id})">✏️ Editar</div>
+<div onclick="eliminar(${i.id})">🗑 Eliminar</div>
+</div>
+<img src="${getFavicon(url)}">
+<div>${i.titulo}</div>
+<div class="tag">${i.categoria}</div>
+`;
 
-        const div = document.createElement("div");
-        div.className = "card";
+div.onclick=()=>window.open(url,"_blank");
 
-        div.innerHTML = `
-            <img src="${getFavicon(url)}">
-            <div>${i.titulo}</div>
-            <div class="tag">${i.categoria}</div>
-        `;
+const more=div.querySelector(".more");
+const dropdown=div.querySelector(".dropdown");
 
-        div.onclick = () => window.open(url, "_blank");
+more.onclick=(e)=>{
+e.stopPropagation();
+dropdown.style.display=dropdown.style.display==="flex"?"none":"flex";
+};
 
-        cont.appendChild(div);
-    });
+cont.appendChild(div);
+});
 }
 
-function categorias() {
-    const select = document.getElementById("filter");
-    const cats = [...new Set(data.map(i => i.categoria))];
+async function eliminar(id){
+if(!confirm("¿Eliminar enlace?"))return;
 
-    select.innerHTML = '<option value="">Todas</option>';
-    cats.forEach(c => {
-        select.innerHTML += `<option value="${c}">${c}</option>`;
-    });
+await supabaseClient.from('links').delete().eq('id',id);
+cargar();
 }
 
-function openModal() {
-    document.getElementById("modal").style.display = "flex";
+function editar(id){
+const item=data.find(x=>x.id===id);
+
+document.getElementById("titulo").value=item.titulo;
+document.getElementById("url").value=item.url;
+document.getElementById("categoria").value=item.categoria;
+
+editId=id;
+openModal();
 }
 
-async function guardar() {
-    const titulo = document.getElementById("titulo").value.trim();
-    const url = document.getElementById("url").value.trim();
-    const categoria = document.getElementById("categoria").value.trim();
+async function guardar(){
+const titulo=document.getElementById("titulo").value;
+const url=document.getElementById("url").value;
+const categoria=document.getElementById("categoria").value;
 
-    if (!titulo || !url || !categoria) {
-        alert("Completa todos los campos");
-        return;
-    }
-
-    const { error } = await supabaseClient
-        .from('links')
-        .insert([{ titulo, url, categoria }]);
-
-    if (error) {
-        console.error(error);
-        alert("Error al guardar");
-        return;
-    }
-
-    document.getElementById("modal").style.display = "none";
-
-    document.getElementById("titulo").value = "";
-    document.getElementById("url").value = "";
-    document.getElementById("categoria").value = "";
-
-    cargar();
+if(editId){
+await supabaseClient.from('links')
+.update({titulo,url,categoria})
+.eq('id',editId);
+editId=null;
+}else{
+await supabaseClient.from('links')
+.insert([{titulo,url,categoria}]);
 }
 
-document.getElementById("search").addEventListener("input", render);
-document.getElementById("filter").addEventListener("change", render);
+document.getElementById("modal").style.display="none";
+document.getElementById("titulo").value="";
+document.getElementById("url").value="";
+document.getElementById("categoria").value="";
 
 cargar();
+}
 
-window.guardar = guardar;
-window.openModal = openModal;
-window.cargar = cargar;
+function categorias(){
+const select=document.getElementById("filter");
+const cats=[...new Set(data.map(i=>i.categoria))];
+select.innerHTML='<option value="">Todas</option>';
+cats.forEach(c=>select.innerHTML+=`<option>${c}</option>`);
+}
+
+function openModal(){
+document.getElementById("modal").style.display="flex";
+}
+
+window.guardar=guardar;
+window.openModal=openModal;
+window.cargar=cargar;
+window.editar=editar;
+window.eliminar=eliminar;
+
+cargar();
 
 });
 </script>
