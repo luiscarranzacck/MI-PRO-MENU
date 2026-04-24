@@ -8,214 +8,228 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root {
-    --bg:#020617;
-    --glass:rgba(255,255,255,0.05);
-    --border:rgba(255,255,255,0.1);
-    --accent:#60a5fa;
-    --accent2:#3b82f6;
-    --text:#e2e8f0;
+:root{
+--bg:#020617;
+--glass:rgba(255,255,255,0.06);
+--border:rgba(255,255,255,0.12);
+
+--c1:#4424d3;
+--c2:#6943de;
+--c3:#8f62e9;
+--c4:#b481f4;
+--c5:#daa0ff;
+
+--text:#e2e8f0;
 }
 
 body{
-    margin:0;
-    font-family:'Segoe UI';
-    background:linear-gradient(135deg,#020617,#0f172a);
-    color:var(--text);
-    display:flex;
+margin:0;
+font-family:'Segoe UI';
+background:linear-gradient(135deg,#020617,#0f172a);
+color:var(--text);
+display:flex;
 }
 
-/* SIDEBAR GLASS */
+/* SIDEBAR */
 .sidebar{
-    width:220px;
-    height:100vh;
-    padding:20px;
-    backdrop-filter:blur(15px);
-    background:var(--glass);
-    border-right:1px solid var(--border);
+width:230px;
+height:100vh;
+padding:20px;
+background:rgba(20,10,60,0.4);
+backdrop-filter:blur(20px);
+border-right:1px solid var(--border);
 }
 
 .sidebar h2{
-    color:var(--accent);
-    margin:0;
+margin:0;
+background:linear-gradient(90deg,var(--c3),var(--c5));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .author{
-    font-size:13px;
-    font-weight:bold;
-    color:white;
-    margin-top:5px;
+font-size:13px;
+font-weight:bold;
+color:white;
+margin-top:5px;
 }
 
 /* MENU */
 .menu{margin-top:30px;}
 
 .menu-item{
-    padding:10px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:.2s;
+padding:10px;
+border-radius:10px;
+cursor:pointer;
+transition:.3s;
 }
 
 .menu-item:hover{
-    background:rgba(96,165,250,0.2);
+background:linear-gradient(135deg,var(--c2),var(--c4));
 }
 
 /* MAIN */
 .main{flex:1;padding:20px;}
 
-.title{margin-bottom:15px;}
-
-/* TOPBAR */
 .topbar{
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
+display:flex;
+gap:10px;
+margin-bottom:20px;
 }
 
 input,select{
-    padding:10px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,0.05);
-    color:white;
+padding:10px;
+border-radius:10px;
+border:1px solid var(--border);
+background:rgba(255,255,255,0.05);
+color:white;
 }
 
 /* GRID */
 .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-    gap:15px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:15px;
 }
 
-/* CARD GLASS */
+/* CARD */
 .card{
-    position:relative;
-    padding:15px;
-    border-radius:16px;
-    background:var(--glass);
-    backdrop-filter:blur(10px);
-    border:1px solid var(--border);
-    cursor:pointer;
-    transition:.3s;
+position:relative;
+padding:15px;
+border-radius:18px;
+background:rgba(70,40,200,0.15);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.15);
+cursor:pointer;
+transition:.3s;
 }
 
 .card:hover{
-    transform:translateY(-5px);
-    background:rgba(96,165,250,0.1);
+transform:translateY(-6px) scale(1.02);
+background:rgba(140,90,255,0.25);
+box-shadow:0 10px 30px rgba(150,100,255,0.4);
 }
 
 .card img{
-    width:40px;
-    margin-bottom:10px;
+width:40px;
+margin-bottom:10px;
 }
 
+/* TAG */
 .tag{
-    background:rgba(96,165,250,0.2);
-    padding:4px 8px;
-    border-radius:6px;
-    font-size:12px;
+background:linear-gradient(135deg,var(--c3),var(--c5));
+padding:4px 8px;
+border-radius:6px;
+font-size:12px;
 }
 
-/* 3 DOTS */
+/* MENU 3 DOTS */
 .more{
-    position:absolute;
-    top:10px;
-    right:10px;
-    cursor:pointer;
+position:absolute;
+top:10px;
+right:10px;
+cursor:pointer;
 }
 
 .dropdown{
-    position:absolute;
-    top:30px;
-    right:10px;
-    background:rgba(15,23,42,0.95);
-    backdrop-filter:blur(10px);
-    border-radius:10px;
-    display:none;
+position:absolute;
+top:30px;
+right:10px;
+background:rgba(20,10,60,0.9);
+backdrop-filter:blur(15px);
+border-radius:10px;
+display:none;
 }
 
 .dropdown div{
-    padding:10px;
-    cursor:pointer;
+padding:10px;
+cursor:pointer;
 }
 
 .dropdown div:hover{
-    background:rgba(96,165,250,0.2);
+background:linear-gradient(135deg,var(--c2),var(--c4));
 }
 
 /* BOTON + */
 .add-btn{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    border:none;
-    font-size:30px;
-    color:white;
-    cursor:pointer;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    box-shadow:0 10px 30px rgba(59,130,246,0.5);
+position:fixed;
+bottom:20px;
+right:20px;
+width:60px;
+height:60px;
+border-radius:50%;
+border:none;
+font-size:30px;
+color:white;
+cursor:pointer;
+background:linear-gradient(135deg,var(--c2),var(--c5));
+box-shadow:0 10px 40px rgba(150,100,255,0.6);
 }
 
 /* MODAL */
 .modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(5px);
-    justify-content:center;
-    align-items:center;
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(8px);
+justify-content:center;
+align-items:center;
 }
 
+/* MODAL BOX */
 .modal-content{
-    position:relative;
-    width:320px;
-    padding:25px;
-    border-radius:16px;
-    background:rgba(30,41,59,0.9);
-    backdrop-filter:blur(20px);
-    border:1px solid var(--border);
+position:relative;
+width:320px;
+padding:25px;
+border-radius:18px;
+background:linear-gradient(145deg,rgba(80,40,200,0.6),rgba(30,10,80,0.8));
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.2);
+box-shadow:0 20px 50px rgba(120,80,255,0.5);
 }
 
 /* CLOSE */
 .close{
-    position:absolute;
-    top:10px;
-    right:12px;
-    cursor:pointer;
-    color:#94a3b8;
+position:absolute;
+top:10px;
+right:12px;
+cursor:pointer;
+color:#aaa;
 }
 .close:hover{color:white;}
 
-/* INPUT MODAL */
+/* INPUT */
 .modal-content input{
-    width:100%;
-    margin-bottom:12px;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:rgba(255,255,255,0.05);
-    color:white;
+width:100%;
+margin-bottom:12px;
+padding:12px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,0.2);
+background:rgba(255,255,255,0.08);
+color:white;
 }
 
-/* BOTON */
+/* BUTTON */
 .modal-content button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),var(--accent2));
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:linear-gradient(135deg,var(--c2),var(--c5));
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
 }
 
+.modal-content button:hover{
+transform:scale(1.05);
+}
+
+/* RESPONSIVE */
 @media(max-width:768px){
-    .sidebar{display:none;}
+.sidebar{display:none;}
 }
 </style>
 </head>
@@ -232,7 +246,7 @@ input,select{
 </div>
 
 <div class="main">
-<h2 class="title">Mis enlaces</h2>
+<h2>Mis enlaces</h2>
 
 <div class="topbar">
 <input id="search" placeholder="Buscar...">
@@ -263,7 +277,7 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 const supabaseClient = supabase.createClient(
 "https://fburktlykhajzzvpnfcg.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZidXJrdGx5a2hhanp6dnBuZmNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDg3NDEsImV4cCI6MjA5MjYyNDc0MX0.J1O0IjfC233ezx9jb55xnINm4i9qtX6obnFvCvoyDk4"
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZidXJrdGx5a2hhanp6dnBuZmNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDg3NDEsImV4cCI6MjA5MjYyNDc0MX0.J1O0IjfCvoyDk4"
 );
 
 let data=[];
@@ -284,12 +298,7 @@ function render(){
 const cont=document.getElementById("links");
 cont.innerHTML="";
 
-const search=document.getElementById("search").value.toLowerCase();
-const filter=document.getElementById("filter").value;
-
-data
-.filter(i=>i.titulo.toLowerCase().includes(search)&&(!filter||i.categoria===filter))
-.forEach(i=>{
+data.forEach(i=>{
 let url=i.url.startsWith("http")?i.url:"https://"+i.url;
 
 const div=document.createElement("div");
@@ -376,9 +385,6 @@ const cats=[...new Set(data.map(i=>i.categoria))];
 select.innerHTML='<option value="">Todas</option>';
 cats.forEach(c=>select.innerHTML+=`<option>${c}</option>`);
 }
-
-document.getElementById("search").addEventListener("input",render);
-document.getElementById("filter").addEventListener("change",render);
 
 window.openModal=openModal;
 window.closeModal=closeModal;
