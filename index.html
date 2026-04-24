@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Luis</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root {
@@ -171,22 +171,20 @@ input, select {
 
 <script>
 
-// 🔗 SUPABASE
-const { createClient } = supabase;
-
-const supabaseClient = createClient(
+// 🔗 SUPABASE (YA CONFIGURADO)
+const supabaseClient = supabase.createClient(
   "https://fburktlykhajzzvpnfcg.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZidXJrdGx5a2hhanp6dnBuZmNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDg3NDEsImV4cCI6MjA5MjYyNDc0MX0.J1O0IjfC233ezx9jb55xnINm4i9qtX6obnFvCvoyDk4"
 );
 
 let data = [];
 
-// 🌐 ICONO AUTOMÁTICO
+// ICONO
 function getFavicon(url) {
     return "https://www.google.com/s2/favicons?sz=64&domain=" + url;
 }
 
-// 🚀 CARGAR
+// CARGAR
 async function cargar() {
     const { data: links, error } = await supabaseClient.from('links').select('*');
 
@@ -200,7 +198,7 @@ async function cargar() {
     categorias();
 }
 
-// 🎨 RENDER
+// RENDER
 function render() {
     const cont = document.getElementById("links");
     cont.innerHTML = "";
@@ -232,7 +230,7 @@ function render() {
     });
 }
 
-// 🏷️ CATEGORÍAS
+// CATEGORIAS
 function categorias() {
     const select = document.getElementById("filter");
     const cats = [...new Set(data.map(i => i.categoria))];
@@ -243,12 +241,12 @@ function categorias() {
     });
 }
 
-// ➕ MODAL
+// MODAL
 function openModal() {
     document.getElementById("modal").style.display = "flex";
 }
 
-// 💾 GUARDAR
+// GUARDAR
 async function guardar() {
     const tituloInput = document.getElementById("titulo").value.trim();
     const urlInput = document.getElementById("url").value.trim();
@@ -282,11 +280,11 @@ async function guardar() {
     cargar();
 }
 
-// 🔍 EVENTOS
+// EVENTOS
 document.getElementById("search").addEventListener("input", render);
 document.getElementById("filter").addEventListener("change", render);
 
-// 🚀 INIT
+// INICIO
 cargar();
 
 </script>
