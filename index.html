@@ -29,24 +29,10 @@ body {
     background: #010409;
     height: 100vh;
     padding: 20px;
-    box-sizing: border-box;
 }
 
 .sidebar h2 {
     color: var(--accent);
-}
-
-.sidebar a {
-    display: block;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #c9d1d9;
-}
-
-.sidebar a:hover {
-    background: var(--accent);
 }
 
 /* MAIN */
@@ -138,6 +124,12 @@ input, select {
     width: 300px;
 }
 
+.modal-content input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
 /* MOBILE */
 @media(max-width: 768px) {
     .sidebar {
@@ -151,7 +143,6 @@ input, select {
 
 <div class="sidebar">
     <h2>Dashboard</h2>
-    <a href="#">Inicio</a>
 </div>
 
 <div class="main">
@@ -171,16 +162,16 @@ input, select {
 
 <div class="modal" id="modal">
 <div class="modal-content">
-    <input id="titulo" placeholder="Título"><br><br>
-    <input id="url" placeholder="URL"><br><br>
-    <input id="categoria" placeholder="Categoría"><br><br>
+    <input id="titulo" placeholder="Título">
+    <input id="url" placeholder="URL">
+    <input id="categoria" placeholder="Categoría">
     <button onclick="guardar()">Guardar</button>
 </div>
 </div>
 
 <script>
 
-// SUPABASE
+// 🔗 SUPABASE
 const { createClient } = supabase;
 
 const supabaseClient = createClient(
@@ -190,20 +181,26 @@ const supabaseClient = createClient(
 
 let data = [];
 
-// ICONO AUTOMÁTICO
+// 🌐 ICONO AUTOMÁTICO
 function getFavicon(url) {
     return "https://www.google.com/s2/favicons?sz=64&domain=" + url;
 }
 
-// CARGAR
+// 🚀 CARGAR
 async function cargar() {
-    const { data: links } = await supabaseClient.from('links').select('*');
+    const { data: links, error } = await supabaseClient.from('links').select('*');
+
+    if (error) {
+        console.error("Error al cargar:", error);
+        return;
+    }
+
     data = links || [];
     render();
     categorias();
 }
 
-// RENDER
+// 🎨 RENDER
 function render() {
     const cont = document.getElementById("links");
     cont.innerHTML = "";
@@ -235,7 +232,7 @@ function render() {
     });
 }
 
-// CATEGORIAS
+// 🏷️ CATEGORÍAS
 function categorias() {
     const select = document.getElementById("filter");
     const cats = [...new Set(data.map(i => i.categoria))];
@@ -246,28 +243,51 @@ function categorias() {
     });
 }
 
-// MODAL
+// ➕ MODAL
 function openModal() {
     document.getElementById("modal").style.display = "flex";
 }
 
-// GUARDAR
+// 💾 GUARDAR (CORREGIDO)
 async function guardar() {
-    const titulo = titulo.value;
-    const url = url.value;
-    const categoria = categoria.value;
+    const tituloInput = document.getElementById("titulo").value.trim();
+    const urlInput = document.getElementById("url").value.trim();
+    const categoriaInput = document.getElementById("categoria").value.trim();
 
-    await supabaseClient.from('links').insert([{ titulo, url, categoria }]);
+    if (!tituloInput || !urlInput || !categoriaInput) {
+        alert("Completa todos los campos");
+        return;
+    }
 
-    modal.style.display = "none";
+    const { error } = await supabaseClient
+        .from('links')
+        .insert([{
+            titulo: tituloInput,
+            url: urlInput,
+            categoria: categoriaInput
+        }]);
+
+    if (error) {
+        console.error("Error al guardar:", error);
+        alert("Error al guardar (revisa consola)");
+        return;
+    }
+
+    document.getElementById("modal").style.display = "none";
+
+    // limpiar inputs
+    document.getElementById("titulo").value = "";
+    document.getElementById("url").value = "";
+    document.getElementById("categoria").value = "";
+
     cargar();
 }
 
-// EVENTOS
-search.addEventListener("input", render);
-filter.addEventListener("change", render);
+// 🔍 EVENTOS
+document.getElementById("search").addEventListener("input", render);
+document.getElementById("filter").addEventListener("change", render);
 
-// INIT
+// 🚀 INIT
 cargar();
 
 </script>
