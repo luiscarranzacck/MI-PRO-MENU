@@ -182,7 +182,7 @@ input, select {
     <h2>Dashboard</h2>
 
     <div class="menu">
-        <div class="menu-item active">🏠 Inicio</div>
+        <div class="menu-item active" onclick="cargar()">🏠 Inicio</div>
     </div>
 
     <div class="footer">
@@ -218,7 +218,9 @@ input, select {
 
 <script>
 
-// SUPABASE
+// ESPERAR A QUE TODO CARGUE
+window.addEventListener("DOMContentLoaded", () => {
+
 const supabaseClient = supabase.createClient(
   "https://fburktlykhajzzvpnfcg.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZidXJrdGx5a2hhanp6dnBuZmNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDg3NDEsImV4cCI6MjA5MjYyNDc0MX0.J1O0IjfC233ezx9jb55xnINm4i9qtX6obnFvCvoyDk4"
@@ -226,17 +228,15 @@ const supabaseClient = supabase.createClient(
 
 let data = [];
 
-// ICONO
 function getFavicon(url) {
     return "https://www.google.com/s2/favicons?sz=64&domain=" + url;
 }
 
-// CARGAR
 async function cargar() {
     const { data: links, error } = await supabaseClient.from('links').select('*');
 
     if (error) {
-        console.error("Error al cargar:", error);
+        console.error(error);
         return;
     }
 
@@ -245,13 +245,15 @@ async function cargar() {
     categorias();
 }
 
-// RENDER
 function render() {
     const cont = document.getElementById("links");
     cont.innerHTML = "";
 
-    const search = document.getElementById("search").value.toLowerCase();
-    const filter = document.getElementById("filter").value;
+    const searchInput = document.getElementById("search");
+    const filterInput = document.getElementById("filter");
+
+    const search = searchInput ? searchInput.value.toLowerCase() : "";
+    const filter = filterInput ? filterInput.value : "";
 
     data
     .filter(i => 
@@ -277,9 +279,10 @@ function render() {
     });
 }
 
-// CATEGORIAS
 function categorias() {
     const select = document.getElementById("filter");
+    if (!select) return;
+
     const cats = [...new Set(data.map(i => i.categoria))];
 
     select.innerHTML = '<option value="">Todas</option>';
@@ -288,32 +291,26 @@ function categorias() {
     });
 }
 
-// MODAL
 function openModal() {
     document.getElementById("modal").style.display = "flex";
 }
 
-// GUARDAR
 async function guardar() {
-    const tituloInput = document.getElementById("titulo").value.trim();
-    const urlInput = document.getElementById("url").value.trim();
-    const categoriaInput = document.getElementById("categoria").value.trim();
+    const titulo = document.getElementById("titulo").value.trim();
+    const url = document.getElementById("url").value.trim();
+    const categoria = document.getElementById("categoria").value.trim();
 
-    if (!tituloInput || !urlInput || !categoriaInput) {
+    if (!titulo || !url || !categoria) {
         alert("Completa todos los campos");
         return;
     }
 
     const { error } = await supabaseClient
         .from('links')
-        .insert([{
-            titulo: tituloInput,
-            url: urlInput,
-            categoria: categoriaInput
-        }]);
+        .insert([{ titulo, url, categoria }]);
 
     if (error) {
-        console.error("Error al guardar:", error);
+        console.error(error);
         alert("Error al guardar");
         return;
     }
@@ -327,12 +324,19 @@ async function guardar() {
     cargar();
 }
 
-// EVENTOS
-document.getElementById("search").addEventListener("input", render);
-document.getElementById("filter").addEventListener("change", render);
+// EVENTOS SEGUROS
+document.getElementById("search")?.addEventListener("input", render);
+document.getElementById("filter")?.addEventListener("change", render);
 
-// INIT
+// INICIO
 cargar();
+
+// HACER FUNCIONES GLOBALES
+window.guardar = guardar;
+window.openModal = openModal;
+window.cargar = cargar;
+
+});
 
 </script>
 
